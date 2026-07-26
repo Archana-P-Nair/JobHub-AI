@@ -1,33 +1,47 @@
-import { useEffect, useState } from "react";
-import { checkHealth } from "./services/healthService";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import CandidateDashboard from "./pages/CandidateDashboard";
+import RecruiterDashboard from "./pages/RecruiterDashboard";
+import NotFound from "./pages/NotFound";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-    const [message, setMessage] = useState("Connecting...");
-
-    useEffect(() => {
-        const fetchHealth = async () => {
-            try {
-                const data = await checkHealth();
-                setMessage(data.message);
-            } catch (error) {
-                setMessage("Failed to connect to backend");
-                console.error(error);
-            }
-        };
-
-        fetchHealth();
-    }, []);
-
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-            <h1 className="text-5xl font-bold text-blue-600">
-                JobHub AI
-            </h1>
+        <BrowserRouter>
+            <Routes>
 
-            <p className="text-lg text-gray-700">
-                {message}
-            </p>
-        </div>
+                <Route path="/" element={<Home />} />
+
+                <Route path="/login" element={<Login />} />
+
+                <Route path="/register" element={<Register />} />
+
+                <Route
+                    path="/candidate"
+                    element={
+                        <ProtectedRoute role="candidate">
+                            <CandidateDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/recruiter"
+                    element={
+                        <ProtectedRoute role="recruiter">
+                            <RecruiterDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route path="*" element={<NotFound />} />
+
+            </Routes>
+        </BrowserRouter>
     );
 }
 

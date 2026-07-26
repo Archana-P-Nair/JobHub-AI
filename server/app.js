@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
+const authRoutes = require("./routes/authRoutes");
+
 const app = express();
 
 app.use(
@@ -13,10 +15,12 @@ app.use(
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
-    res.status(200).json({
+    res.json({
         success: true,
         message: "JobHub API is healthy",
     });
 });
+
+app.use("/api/auth", authRoutes);
 
 module.exports = app;
