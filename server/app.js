@@ -43,6 +43,13 @@ app.use("/api/candidate", candidateRoutes);
 
 
 
+app.get(["/", "/api"], (req, res) => {
+    res.json({
+        success: true,
+        message: "JobHub API is running smoothly!",
+    });
+});
+
 app.get("/api/health", (req, res) => {
     res.json({
         success: true,
