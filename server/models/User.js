@@ -2,6 +2,37 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
     {
+        bio: {
+    type: String,
+    default: "",
+},
+headline: {
+    type: String,
+    default: "",
+},
+skills: [{
+    type: String,
+}],
+
+linkedin: {
+    type: String,
+    default: "",
+},
+
+github: {
+    type: String,
+    default: "",
+},
+
+resume: {
+    type: String,
+    default: "",
+},
+
+savedJobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Job",
+}],
         name: {
             type: String,
             required: true,

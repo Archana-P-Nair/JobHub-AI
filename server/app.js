@@ -1,26 +1,51 @@
 const express = require("express");
 const cors = require("cors");
-
-const authRoutes = require("./routes/authRoutes");
+const path = require("path");
 
 const app = express();
 
-app.use(
-    cors({
-        origin: "http://localhost:5173",
-        credentials: true,
-    })
-);
+
+// Middleware FIRST
+app.use(cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+}));
 
 app.use(express.json());
+
+
+// Static files
+app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "uploads"))
+);
+
+
+// Routes AFTER middleware
+
+const aiRoutes = require("./routes/aiRoutes");
+const authRoutes = require("./routes/authRoutes");
+const jobRoutes = require("./routes/jobRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+const recruiterRoutes = require("./routes/recruiterRoutes");
+const candidateRoutes = require("./routes/candidateRoutes");
+
+
+app.use("/api/ai", aiRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/applications", applicationRoutes);
+app.use("/api/recruiter", recruiterRoutes);
+app.use("/api/candidate", candidateRoutes);
+
+
 
 app.get("/api/health", (req, res) => {
     res.json({
         success: true,
-        message: "JobHub API is healthy",
+        message: "Healthy",
     });
 });
 
-app.use("/api/auth", authRoutes);
 
 module.exports = app;

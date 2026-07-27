@@ -1,3 +1,19 @@
+import AuthLayout from "../components/layout/AuthLayout";
+import RegisterForm from "../components/auth/RegisterForm";
+
 export default function Register() {
-    return <h1>Register Page</h1>;
+
+    return (
+
+        <AuthLayout
+            title="Create Your Account"
+            subtitle="Join thousands of professionals using JobHub AI."
+        >
+
+            <RegisterForm />
+
+        </AuthLayout>
+
+    );
+
 }
