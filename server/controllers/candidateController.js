@@ -17,7 +17,16 @@ exports.updateProfile = async (req, res) => {
 
     user.name = req.body.name;
     user.headline = req.body.headline;
-    user.skills = req.body.skills;
+
+    // Handle both array (skills[]) and comma-string formats
+    const rawSkills = req.body["skills[]"] || req.body.skills;
+    if (rawSkills) {
+        if (Array.isArray(rawSkills)) {
+            user.skills = rawSkills.filter(Boolean);
+        } else {
+            user.skills = rawSkills.split(",").map(s => s.trim()).filter(Boolean);
+        }
+    }
 
     if (req.file) {
 

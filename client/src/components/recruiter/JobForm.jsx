@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 export default function JobForm({
-    defaultValues = {},
+    initialValues = {},
     onSubmit,
     loading = false,
 }) {
@@ -12,29 +12,29 @@ export default function JobForm({
         formState: { errors },
     } = useForm({
         defaultValues: {
-            title: defaultValues.title || "",
-            company: defaultValues.company || "",
-            location: defaultValues.location || "",
+            title: initialValues.title || "",
+            company: initialValues.company || "",
+            location: initialValues.location || "",
             employmentType:
-                defaultValues.employmentType || "Full-Time",
-            remote: defaultValues.remote || false,
+                initialValues.employmentType || "Full-Time",
+            remote: initialValues.remote || false,
 
             salaryMin:
-                defaultValues.salary?.min || "",
+                initialValues.salary?.min || "",
 
             salaryMax:
-                defaultValues.salary?.max || "",
+                initialValues.salary?.max || "",
 
             currency:
-                defaultValues.salary?.currency || "INR",
+                initialValues.salary?.currency || "INR",
 
             skills:
-                defaultValues.skills
-                    ? defaultValues.skills.join(", ")
+                initialValues.skills
+                    ? initialValues.skills.join(", ")
                     : "",
 
             description:
-                defaultValues.description || "",
+                initialValues.description || "",
         },
     });
 

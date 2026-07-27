@@ -28,6 +28,7 @@ export default function CandidateDashboard() {
 
     const [recommendations, setRecommendations] = useState([]);
     const [loadingAI, setLoadingAI] = useState(true);
+    const [aiError, setAiError] = useState(false);
 
     // -----------------------------
     // Filters
@@ -120,6 +121,8 @@ export default function CandidateDashboard() {
 
     async function loadRecommendations() {
     try {
+        setLoadingAI(true);
+        setAiError(false);
 
         const data = await getRecommendations();
 
@@ -130,6 +133,7 @@ export default function CandidateDashboard() {
     } catch (error) {
 
         console.error(error);
+        setAiError(true);
 
     } finally {
 
@@ -156,17 +160,31 @@ export default function CandidateDashboard() {
 
             <div className="mb-10">
 
-                <h2 className="text-2xl font-bold mb-5">
-
-                    🤖 AI Job Recommendations
-
-                </h2>
+                <div className="flex items-center justify-between mb-5">
+                    <h2 className="text-2xl font-bold">
+                        🤖 AI Job Recommendations
+                    </h2>
+                    <button
+                        onClick={loadRecommendations}
+                        disabled={loadingAI}
+                        className="flex items-center gap-2 text-sm bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                    >
+                        {loadingAI ? "Refreshing..." : "🔄 Refresh"}
+                    </button>
+                </div>
 
                 {
 
                     loadingAI ? (
 
                         <p>Loading AI recommendations...</p>
+
+                    ) : aiError ? (
+
+                        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                            <p className="text-red-600 font-medium">Could not load recommendations.</p>
+                            <p className="text-sm text-red-400 mt-1">Make sure you've added skills to your profile, then click Refresh.</p>
+                        </div>
 
                     ) : recommendations.length === 0 ? (
 
