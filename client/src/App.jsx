@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import EditJob from "./pages/recruiter/EditJob";
 import Analytics from "./pages/recruiter/Analytics";
 import CreateJob from "./components/recruiter/CreateJob";
 import ApplicantsPage from "./pages/recruiter/ApplicantsPage";
-import Home from "./pages/Home";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CandidateDashboard from "./pages/candidate/Dashboard";
@@ -21,7 +21,7 @@ function App() {
         <BrowserRouter>
             <Routes>
 
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Navigate to="/login" replace />} />
 
                 <Route path="/login" element={<Login />} />
 
