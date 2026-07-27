@@ -7,7 +7,10 @@ const app = express();
 
 // Middleware FIRST
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+        // allow requests with no origin, or specific origins
+        return callback(null, true);
+    },
     credentials: true,
 }));
 
